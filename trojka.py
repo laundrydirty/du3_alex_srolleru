@@ -2,9 +2,9 @@
 
 
 
-points=[]
-linestring=[]
-polygon=[]
+mypoints=[]
+mylinestrings=[]
+mypolygons=[]
 
 if fjutrs['features']['geometry']['type']=='Point':
 
