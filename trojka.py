@@ -1,15 +1,19 @@
 import json,os
-from pathlib import path
+from pathlib import Path
 
 mypoints=[]
 mylinestrings=[]
 mypolygons=[]
 
-for filepath in path(sys.argv[1]).rglob('**/*.geojson'):
-    filename=os.path.basename(filepath)
-    with open(filename, "r", encoding="utf-8") as f:
-        fjutrs = json.load(f)
 
+
+for filepath in Path(sys.argv[1]).rglob('**/*.geojson','**/*.json'):
+    with open(filepath, "r", encoding="utf-8") as f:
+        try:
+            fjutrs = json.load(f)
+            print(filepath)
+        except json.JSONDecodeError:
+            print('invalid JSON format')
 
     for pod in fjutrs['features']:
         if pod['geometry']['type']=='Point':
@@ -23,7 +27,6 @@ for filepath in path(sys.argv[1]).rglob('**/*.geojson'):
             mypolygons.append(pod)
         else:
             pass
-
 
 with open("points.geojson","w",encoding="utf-8") as p:
     json.dump(mypoints,p,indent=2,ensure_ascii=False)
