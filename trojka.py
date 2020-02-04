@@ -10,17 +10,18 @@ mypoints=[]
 mylinestrings=[]
 mypolygons=[]
 
-if fjutrs['features']['geometry']['type']=='Point':
-    fjutrs['features']['properties']['filepath']=pathlib(fjutrs)
-    mypoints.append()
-elif fjutrs['features']['geometry']['type']=='Linestring':
+for pod in fjutrs['features']:
+    if pod['geometry']['type']=='Point':
+        pod['filepath']=pathlib(fjutrs)
+        mypoints.append(pod)
+    elif pod['geometry']['type']=='Linestring':
 
-    mylinestrings.append()
-elif fjutrs['features']['geometry']['type']=='Polygon':
+        mylinestrings.append(pod)
+    elif pod['geometry']['type']=='Polygon':
 
-    mypolygons.append()
-else:
-    print(chyba)
+        mypolygons.append(pod)
+    else:
+        print(chyba)
 
 
 with open("points.geojson","w",encoding="utf-8") as f:
