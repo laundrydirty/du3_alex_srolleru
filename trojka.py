@@ -1,6 +1,5 @@
 #du3
-import json
-from pathlib import Path
+import json,os
 
 
 with open("input.geojson","r",encoding="utf-8") as f:
@@ -12,13 +11,13 @@ mypolygons=[]
 
 for pod in fjutrs['features']:
     if pod['geometry']['type']=='Point':
-        pod['filepath']=pathlib(fjutrs)
+        pod['filepath']=os.path.abspath('fjutrs')
         mypoints.append(pod)
     elif pod['geometry']['type']=='Linestring':
-
+        pod['filepath'] = os.path.abspath('fjutrs')
         mylinestrings.append(pod)
     elif pod['geometry']['type']=='Polygon':
-
+        pod['filepath'] = os.path.abspath('fjutrs')
         mypolygons.append(pod)
     else:
         print(chyba)
