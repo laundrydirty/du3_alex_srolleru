@@ -1,32 +1,33 @@
-import json,os
+import json,os,sys
 from pathlib import Path
 
 mypoints=[]
 mylinestrings=[]
 mypolygons=[]
 
+#chybi vyjimky a json format
 
-
-for filepath in Path(sys.argv[1]).rglob('**/*.geojson','**/*.json'):
+for filepath in Path(sys.argv[1]).rglob('**/*.geojson'):
     with open(filepath, "r", encoding="utf-8") as f:
         try:
             fjutrs = json.load(f)
             print(filepath)
+            for pod in fjutrs['features']:
+                if pod['geometry']['type'] == 'Point':
+                    pod['filepath'] = str(filepath)
+                    mypoints.append(pod)
+                elif pod['geometry']['type'] == 'Linestring':
+                    pod['filepath'] = str(filepath)
+                    mylinestrings.append(pod)
+                elif pod['geometry']['type'] == 'Polygon':
+                    pod['filepath'] = str(filepath)
+                    mypolygons.append(pod)
+                else:
+                    pass
         except json.JSONDecodeError:
-            print('invalid JSON format')
+            print('invalid JSON format: ',filepath)
 
-    for pod in fjutrs['features']:
-        if pod['geometry']['type']=='Point':
-            pod['filepath']=os.path.abspath('fjutrs')
-            mypoints.append(pod)
-        elif pod['geometry']['type']=='Linestring':
-            pod['filepath'] = os.path.abspath('fjutrs')
-            mylinestrings.append(pod)
-        elif pod['geometry']['type']=='Polygon':
-            pod['filepath'] = os.path.abspath('fjutrs')
-            mypolygons.append(pod)
-        else:
-            pass
+
 
 with open("points.geojson","w",encoding="utf-8") as p:
     json.dump(mypoints,p,indent=2,ensure_ascii=False)
