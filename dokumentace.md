@@ -6,4 +6,4 @@ Vstupem je adresář a všechny jeho podadresáře obsahující jednotlivé soub
 
 Spouštení probíhá z příkazové řádky. Za `py geocrawler.py` uživatel zadá absolutní cestu adresáře, který chce aby byl prohledán. Ukázkový spouštěcí příkaz: `py geocrawler.py C:\Users\asrol\PycharmProjects\untitled\du3_testdata`. Program do příkazové řádky vypisuje absolutní cestu souborů `JSON` a `GeoJSON`, které prošel. Pokud narazí na soubor, který nemůže otevřít nebo není validní, vypíše u daného souboru hlášku `invalid JSON format`.
 
-Výstupem jsou tři souboury ve fomátu `GeoJSON`, kde jsou jednotlivé features rozděleny podle geometrie na body, linie a poygony -  `points.geojson`, `lines.geojson` a `polygons.geojson`. Zároveň každá feature obsahuje nový atribut `filepath` s cestou k původnímu souboru, odkuch pochází. 
+Výstupem jsou tři souboury ve fomátu `GeoJSON`, kde jsou jednotlivé features rozděleny podle geometrie na body, linie a poygony -  `points.geojson`, `lines.geojson` a `polygons.geojson`. Zároveň každá feature obsahuje nový atribut `filepath` s cestou k původnímu souboru, odkud pochází. 
