@@ -39,13 +39,23 @@ for e in extensions:
                     print('invalid JSON format: ', filepath)
         except PermissionError:
             print('you do not have permission to open file: ', filepath)
+        except Exception:
+            print('unknown error encountered: ',filepath)
 
-#vystup ve foramtu geojson, features rozdeleny podle geometrie
-with open("points.geojson","w",encoding="utf-8") as p:
-    json.dump(mypoints,p,indent=2,ensure_ascii=False)
+try:
+    # vystup ve foramtu geojson, features rozdeleny podle geometrie
+    with open("points.geojson", "w", encoding="utf-8") as p:
+        json.dump(mypoints, p, indent=2, ensure_ascii=False)
 
-with open("lines.geojson","w",encoding="utf-8") as l:
-    json.dump(mylinestrings,l,indent=2,ensure_ascii=False)
+    with open("lines.geojson", "w", encoding="utf-8") as l:
+        json.dump(mylinestrings, l, indent=2, ensure_ascii=False)
 
-with open("polygons.geojson","w",encoding="utf-8") as po:
-    json.dump(mypolygons,po,indent=2,ensure_ascii=False)
+    with open("polygons.geojson", "w", encoding="utf-8") as po:
+        json.dump(mypolygons, po, indent=2, ensure_ascii=False)
+#osetreni vyjimek
+except PermissionError:
+    print('you do not have write permissions for: ', sys.argv[1])
+except Exception:
+    print('NO OUTPUT - unknown error')
+
+
