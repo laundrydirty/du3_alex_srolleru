@@ -16,29 +16,29 @@ for e in extensions:
             #vstup dat
             with open(filepath, "r", encoding="utf-8") as f:
                 try:
-                    fjutrs = json.load(f)
+                    features = json.load(f)
                     #informuje o tom jaky soubor zpracovava
                     print(filepath)
-                    for pod in fjutrs['features']:
+                    for feat in features['features']:
                         #deleni podle geometrie
-                        if pod['geometry']['type'] == 'Point':
+                        if feat['geometry']['type'] == 'Point':
                             #zapis cesty k souboru
-                            pod['filepath'] = str(filepath)
+                            feat['properties']['filepath'] = str(filepath)
                             #ulozeni do prislusneho seznamu
-                            mypoints.append(pod)
-                        elif pod['geometry']['type'] == 'LineString':
-                            pod['filepath'] = str(filepath)
-                            mylinestrings.append(pod)
-                        elif pod['geometry']['type'] == 'Polygon':
-                            pod['filepath'] = str(filepath)
-                            mypolygons.append(pod)
+                            mypoints.append(feat)
+                        elif feat['geometry']['type'] == 'LineString':
+                            feat['properties']['filepath'] = str(filepath)
+                            mylinestrings.append(feat)
+                        elif feat['geometry']['type'] == 'Polygon':
+                            feat['properties']['filepath'] = str(filepath)
+                            mypolygons.append(feat)
                         else:
                             pass
                 #osetreni vyjimek
                 except json.JSONDecodeError:
                     print('invalid JSON format: ', filepath)
         except PermissionError:
-            print('invalid JSON format: ', filepath)
+            print('you do not have permission to open file: ', filepath)
 
 #vystup ve foramtu geojson, features rozdeleny podle geometrie
 with open("points.geojson","w",encoding="utf-8") as p:
